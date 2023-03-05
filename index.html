@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+   
+    <title>インターホン返信用</title>
+</head>
+<body
+	<h1>インターホンが押されました</h1>
+	<img src="../static/interphone_camera.png" alt="カメラ付きインターホン"> 
+	<form action="/" method="POST">
+        <h2>訪問者への返答を書いて下さい<br></h2>
+        <textarea id='BOX1' name="speaker_text" rows="10" cols="40" wrap="soft"> </textarea>
+        <input type="submit" name="speaker_action" value="送信">　
+		<p>
+        <input type="button" value="不在連絡"		onclick="TEIKEI1()">
+        <input type="button" value="すぐに出ます"	onclick="TEIKEI2()">
+        <input type="button" value="全て削除"		onclick="ALLDELETE()">
+		</p>
+		<p>
+		<input type="button" value="定型文１" onclick="Template1()"> 
+		<input type="button" value="定型文２" onclick="Template2()"> 	
+		<input type="button" value="定型文３" onclick="Template3()"> 
+		</p>
+		<p>
+		<input id="openButton1" type="button" value="上記の入力内容を、定型文1に保存" onclick="save1();">
+		</p>
+		<p>
+		<input id="openButton2" type="button" value="上記の入力内容を、定型文2に保存" onclick="save2();">
+		</p>
+		<p>
+		<input id="openButton3" type="button" value="上記の入力内容を、定型文3に保存" onclick="save3();">
+		</p>
+		
+		<dialog id="exDialog1" style="width: 170px; height: 100px; text-align: center;">
+		<p>定型文1に保存しました</p>
+		<p><button type="button" id="closeButton1">OK
+		</button></p>
+		</dialog>
+		<dialog id="exDialog2" style="width: 170px; height: 100px; text-align: center;">
+		<p>定型文2に保存しました</p>
+		<p><button type="button" id="closeButton2">OK
+		</button></p>
+		</dialog>
+		<dialog id="exDialog3" style="width: 170px; height: 100px; text-align: center;">
+		<p>定型文3に保存しました</p>
+		<p><button type="button" id="closeButton3">OK
+		</button></p>
+		</dialog>
+		
+        <script type="text/javascript">
+			function TEIKEI1()
+			{
+				document.getElementById('BOX1').value='すみません。ただいま外出中です';
+			}
+ 
+			function TEIKEI2()
+			{
+				document.getElementById('BOX1').value='玄関に向かいます。少々お待ち下さい';
+			}
+			function ALLDELETE()
+			{
+				document.getElementById('BOX1').value=' ';
+			}
+			function Template1(){
+						const str1 = localStorage.getItem("key1");
+						document.getElementById('BOX1').value= str1;
+						}
+			function Template2(){
+							const str2 = localStorage.getItem("key2");
+							document.getElementById('BOX1').value= str2;
+							}
+			function Template3(){
+							const str3 = localStorage.getItem("key3");
+							document.getElementById('BOX1').value= str3;
+							}
+							
+			var str1 ;				
+			var str2 ;				
+			var str3 ;	
+
+			function save1() {
+				var UserString = document.getElementById('BOX1').value;
+				str1 = UserString;
+				localStorage.setItem('key1', str1);
+				}		
+			function save2() {
+				var UserString = document.getElementById('BOX1').value;
+				str2 = UserString;
+				localStorage.setItem('key2', str2);
+				}		
+			function save3() {
+				var UserString = document.getElementById('BOX1').value;
+				str3 = UserString;
+				localStorage.setItem('key3', str3);
+				}
+
+			var openButton1 = document.getElementById('openButton1');
+			var openButton2 = document.getElementById('openButton2');	
+			var openButton3 = document.getElementById('openButton3');
+			var closeButton1 = document.getElementById('closeButton1');
+			var closeButton2 = document.getElementById('closeButton2');
+			var closeButton3 = document.getElementById('closeButton3');
+			var exDialog1 = document.getElementById('exDialog1');
+			var exDialog2 = document.getElementById('exDialog2');
+			var exDialog3 = document.getElementById('exDialog3');
+			openButton1.addEventListener('click', function()
+			{
+			exDialog1.showModal();
+			// showModal() = モーダルダイアログ（周囲の領域は操作不能）
+			// show() = モードレスダイアログ（周囲の領域も操作可能）
+			});
+
+			closeButton1.addEventListener('click', function()
+			{
+				exDialog1.close();
+			});	
+			
+			openButton2.addEventListener('click', function() 
+			{
+			exDialog2.showModal();
+			// showModal() = モーダルダイアログ（周囲の領域は操作不能）
+			// show() = モードレスダイアログ（周囲の領域も操作可能）
+			});
+
+			closeButton2.addEventListener('click', function() 
+			{
+				exDialog2.close();
+			});	
+			
+			openButton3.addEventListener('click', function()
+			{
+			exDialog3.showModal();
+			// showModal() = モーダルダイアログ（周囲の領域は操作不能）
+			// show() = モードレスダイアログ（周囲の領域も操作可能）
+			});
+
+			closeButton3.addEventListener('click', function()
+			{
+				exDialog3.close();
+			});	
+							
+		</script>
+
+	</form>
+	<!--<script>SOUSHIN_start();</script>-->
+   
+	<h1>Raspberry Pi</h1>
+    <img src="https://machitoPi4B.academic.kcg.edu:8080/?action=stream"
+	alt="映像" width="500" height="500">
+	
+<audio src="{{url_for('static', filename="./REC.wav")}}" controls>
+</audio>
+
+	<h2>インターホンカメラ</h2>
+<p>インターホンのカメラが映らない時は<a href="http://machitoPi4B.academic.kcg.edu:8080/?action=stream">こちら</a></p>
+</body>
+</html>
